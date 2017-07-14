@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Тестовое задание</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+        <link rel="stylesheet" href="css/jquery.rateyo.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+
+
+
+
+
+
+
+
+<body class="product">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="index.html">Happy Items</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html" id="hello">Welcome</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="">
+                <a href="login.html" id="login">
+                    <span class="glyphicon glyphicon-log-in"></span> Login 
+                </a>
+            </li>
+            <li>
+                <a href="registration.html" id="registration"> Registration</a>
+            </li>
+            <li>
+                <a href="" id="logout">
+                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container" id="product">
+
+        <a href="index.html" id="back"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+    </div>
+    <div class="container" id="commentPost">
+        <h3>Comments</h3>
+        <div class="alert alert-danger" role="alert" id="commentForNotLogged">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            Only Logged users can write comments
+        </div>
+        <div class="form-group" id="commentForLogged">
+            <div id="commentErrors"></div>
+            <div class="form-group">
+            Rate: 
+            <div class="rateyo-readonly-widg"></div>
+
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="commentText"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="sendComment">Send comment</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="container" id="comments"></div>
+
+
+    <div class="navbar navbar-inverse row-fluid">
+        <div class="navbar-inner">
+            <ul  class="nav navbar-nav"><li><a href="">bububububu</a></li></ul>
+        </div>
+    </div>
+
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="js/script.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.rateyo.js"></script>
+
+    <script>
+    var rating;
+        $(function () {
+
+        $(".rateyo-readonly-widg").rateYo({
+
+          rating: 1,
+          numStars: 5,
+          precision: 2,
+          minValue: 1,
+          maxValue: 5,
+          fullStar: true
+        }).on("rateyo.change", function (e, data) {
+          rating = data.rating;
+        });
+      });
+
+        const productId = getPostIdByUrl(location.href);
+        let sendCommentButton = document.querySelector('#sendComment');
+        getPoductById(productId).then(function() {
+            if (ifLoggedIn()) {
+                document.querySelector('#commentForLogged').style.display = 'block';
+                document.querySelector('#commentForNotLogged').style.display = 'none';
+            } else {
+                document.querySelector('#commentForLogged').style.display = 'none';
+                document.querySelector('#commentForNotLogged').style.display = 'block';
+            }
+            sendCommentButton.addEventListener('click', function(event) {
+                let rate = rating;
+                let text = document.querySelector('#commentText').value;
+                postComment(productId, rate, text);
+            });
+
+            getProductCommentsById(productId);
+        });
+    </script>
+
+</body>

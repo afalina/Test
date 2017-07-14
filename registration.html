@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Тестовое задание</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<body class="login-form">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="index.html">Happy Items</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html" id="hello">Welcome</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="login.html" id="login">
+                    <span class="glyphicon glyphicon-log-in"></span> Login 
+                </a>
+            </li>
+            <li class="active">
+                <a href="registration.html" id="registration"> Registration</a>
+            </li>
+            <li>
+                <a href="" id="logout">
+                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+        <h3>Type username and password for registration.</h3>
+        <div class="container" id="loginErrors">
+            <div class="alert alert-info" id="loginInfo">
+                <strong>Attention!</strong> Your are in the system. If you want registration other username <a href="" id="logout">logout</a> first
+            </div>
+        </div>
+      <form>
+        <div class="form-group row">
+          <label for="username" class="col-sm-2 col-form-label">Username</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group row">
+            <button type="button" class="btn btn-primary" id="registrationButton">Registration</button>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="navbar-fixed-bottom navbar-inverse row-fluid">
+    <div class="navbar-inner">
+        <ul  class="nav navbar-nav"><li><a href="">bububububu</a></li></ul>
+    </div>
+</div>
+
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        const registrationUser = document.querySelector('#registrationButton');
+
+        if (ifLoggedIn()) {
+            document.querySelector('#loginInfo').style.display = 'block';
+            document.querySelector('#username').disabled = true;
+            document.querySelector('#password').disabled = true;
+        } else {
+            document.querySelector('#loginInfo').style.display = 'none';
+            document.querySelector('#username').disabled = false;
+            document.querySelector('#password').disabled = false;
+        }
+
+        registrationUser.addEventListener(
+            'click', function(event) {
+                let username = document.querySelector('#username').value;
+                let password = document.querySelector('#password').value;
+                registration(username, password).then(function(data) {});
+            }
+        );
+        
+    </script>
+</body>
